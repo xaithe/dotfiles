@@ -228,12 +228,40 @@ vim.opt.rtp:prepend(lazypath)
 --
 -- NOTE: Here is where you install your plugins.
 require("lazy").setup({
-	-- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
 	"tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
-
-	-- NOTE: Plugins can also be added by using a table,
-	-- with the first argument being the link and the following
-	-- keys can be used to configure plugin behavior/loading/etc.
+	{ -- tmux integration
+		"aserowy/tmux.nvim",
+		config = function()
+			return require("tmux").setup()
+		end,
+	},
+	{
+		"nvim-neo-tree/neo-tree.nvim",
+		opts = {
+			window = {
+				position = "right",
+				mappings = {
+					["Y"] = "none",
+				},
+			},
+			filesystem = {
+				filtered_items = {
+					hide_dotfiles = false,
+					hide_by_name = {
+						".git",
+						".DS_Store",
+					},
+					always_show = {
+						".env",
+					},
+				},
+			},
+		},
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"MunifTanjim/nui.nvim",
+		},
+	},
 	--
 	-- Use `opts = {}` to force a plugin to be loaded.
 	--
@@ -769,9 +797,9 @@ require("lazy").setup({
 				-- No, but seriously. Please read `:help ins-completion`, it is really good!
 				mapping = cmp.mapping.preset.insert({
 					-- Select the [n]ext item
-					["<C-n>"] = cmp.mapping.select_next_item(),
+					--["<C-n>"] = cmp.mapping.select_next_item(),
 					-- Select the [p]revious item
-					["<C-p>"] = cmp.mapping.select_prev_item(),
+					--["<C-p>"] = cmp.mapping.select_prev_item(),
 
 					-- Scroll the documentation window [b]ack / [f]orward
 					["<C-b>"] = cmp.mapping.scroll_docs(-4),
@@ -780,13 +808,13 @@ require("lazy").setup({
 					-- Accept ([y]es) the completion.
 					--  This will auto-import if your LSP supports it.
 					--  This will expand snippets if the LSP sent a snippet.
-					["<C-y>"] = cmp.mapping.confirm({ select = true }),
+					--["<C-y>"] = cmp.mapping.confirm({ select = true }),
 
 					-- If you prefer more traditional completion keymaps,
 					-- you can uncomment the following lines
-					--['<CR>'] = cmp.mapping.confirm { select = true },
-					--['<Tab>'] = cmp.mapping.select_next_item(),
-					--['<S-Tab>'] = cmp.mapping.select_prev_item(),
+					["<CR>"] = cmp.mapping.confirm({ select = true }),
+					["<Tab>"] = cmp.mapping.select_next_item(),
+					["<S-Tab>"] = cmp.mapping.select_prev_item(),
 
 					-- Manually trigger a completion from nvim-cmp.
 					--  Generally you don't need this, because nvim-cmp will display
@@ -834,16 +862,40 @@ require("lazy").setup({
 		-- change the command in the config to whatever the name of that colorscheme is.
 		--
 		-- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-		"folke/tokyonight.nvim",
+		"marko-cerovac/material.nvim",
 		priority = 1000, -- Make sure to load this before all the other start plugins.
 		init = function()
-			-- Load the colorscheme here.
-			-- Like many other themes, this one has different styles, and you could load
-			-- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-			vim.cmd.colorscheme("tokyonight-night")
-
-			-- You can configure highlights by doing something like:
-			vim.cmd.hi("Comment gui=none")
+			vim.g.material_style = "deep ocean"
+      vim.cmd.colorscheme("material")
+		end,
+		opts={
+				contrast = {
+					sidebars = true,
+					floating_windows = false,
+					cursor_line = true,
+					popup_menu = false,
+				},
+				styles = {
+					comments = { italic = true },
+				},
+				plugins = { -- Uncomment the plugins that you use to highlight them
+					--  Available plugins:
+					--  "dap",
+					"gitsigns",
+					"neo-tree",
+					"nvim-cmp",
+					"nvim-web-devicons",
+					"telescope",
+				},
+				disable = {
+					borders = true,
+					background = false,
+					term_colors = false,
+					eob_lines = false,
+				},
+				lualine_style = "stealth",
+			})
+			vim.cmd.colorscheme("material")
 		end,
 	},
 
