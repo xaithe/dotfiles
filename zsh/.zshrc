@@ -19,3 +19,6 @@ alias gs="git switch"
 alias gsc="git switch -c"
 eval "$(starship init zsh)"
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /usr/bin/terraform terraform
