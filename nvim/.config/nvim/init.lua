@@ -145,7 +145,7 @@ vim.opt.splitbelow = true
 -- Sets how neovim will display certain whitespace characters in the editor.
 --  See `:help 'list'`
 --  and `:help 'listchars'`
-vim.opt.list = true
+vim.opt.list = false
 vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 
 -- Preview substitutions live, as you type!
@@ -275,11 +275,12 @@ require("lazy").setup({
 		"lewis6991/gitsigns.nvim",
 		opts = {
 			signs = {
-				add = { text = "+" },
-				change = { text = "~" },
+				add = { text = "┃" },
+				change = { text = "┃" },
 				delete = { text = "_" },
 				topdelete = { text = "‾" },
 				changedelete = { text = "~" },
+				untracked = { text = "┆" },
 			},
 		},
 	},
@@ -866,37 +867,28 @@ require("lazy").setup({
 		priority = 1000, -- Make sure to load this before all the other start plugins.
 		init = function()
 			vim.g.material_style = "deep ocean"
-      vim.cmd.colorscheme("material")
-		end,
-		opts={
-				contrast = {
-					sidebars = true,
-					floating_windows = false,
-					cursor_line = true,
-					popup_menu = false,
-				},
-				styles = {
-					comments = { italic = true },
-				},
-				plugins = { -- Uncomment the plugins that you use to highlight them
-					--  Available plugins:
-					--  "dap",
-					"gitsigns",
-					"neo-tree",
-					"nvim-cmp",
-					"nvim-web-devicons",
-					"telescope",
-				},
-				disable = {
-					borders = true,
-					background = false,
-					term_colors = false,
-					eob_lines = false,
-				},
-				lualine_style = "stealth",
-			})
 			vim.cmd.colorscheme("material")
 		end,
+		opts = {
+			contrast = {},
+			styles = {
+				comments = { italic = true },
+			},
+			plugins = {
+				"gitsigns",
+				"neo-tree",
+				"nvim-cmp",
+				"nvim-web-devicons",
+				"telescope",
+			},
+			disable = {
+				borders = true,
+				background = false,
+				term_colors = false,
+				eob_lines = false,
+			},
+			lualine_style = "stealth",
+		},
 	},
 
 	-- Highlight todo, notes, etc in comments
