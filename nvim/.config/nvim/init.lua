@@ -863,32 +863,12 @@ require("lazy").setup({
 		-- change the command in the config to whatever the name of that colorscheme is.
 		--
 		-- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-		"marko-cerovac/material.nvim",
+		"folke/tokyonight.nvim",
 		priority = 1000, -- Make sure to load this before all the other start plugins.
+		lazy = false,
 		init = function()
-			vim.g.material_style = "deep ocean"
-			vim.cmd.colorscheme("material")
+			vim.cmd.colorscheme("tokyonight")
 		end,
-		opts = {
-			contrast = {},
-			styles = {
-				comments = { italic = true },
-			},
-			plugins = {
-				"gitsigns",
-				"neo-tree",
-				"nvim-cmp",
-				"nvim-web-devicons",
-				"telescope",
-			},
-			disable = {
-				borders = true,
-				background = false,
-				term_colors = false,
-				eob_lines = false,
-			},
-			lualine_style = "stealth",
-		},
 	},
 
 	-- Highlight todo, notes, etc in comments
